@@ -3,6 +3,7 @@ from flask_cors import CORS
 from time import gmtime, strftime
 import base64
 import re
+import numpy as np
 from setup_db import User, write_file
 from melanomapredictions import predict
 import sys
@@ -49,10 +50,11 @@ def validate():
     name = "test"
     predict2 = predictions.tolist()
     labels2 = str(labels)
-    predict3 = str(predict2)
+    predict3 = np.array(predict2)
+    predict4 = np.round(predict3, 3)
     #colorplot_path = filepath - file_ending + "_colorhistorgram.jpg"
     #colorplot(filepath, 1, colorplot_path)
     #contour_img = contour(filepath)
-    results = {"labels": labels2, "probabilities": predict3}
+    results = {"labels": labels2, "probabilities": predict4}
     return str(results)
 	#write_file(name,file_ending,filepath,malignant,benign,symmetry,border,color,diameter)
